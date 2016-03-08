@@ -47,7 +47,7 @@ public class SidePanel extends JPanel {
 		this.game = game;
 		
 		setPreferredSize(new Dimension(300, BoardPanel.ROW_COUNT * BoardPanel.TILE_SIZE));
-		setBackground(Color.BLACK);
+		setBackground(Color.orange);
 	}
 	
 	private static final int STATISTICS_OFFSET = 150;
@@ -67,7 +67,7 @@ public class SidePanel extends JPanel {
 		/*
 		 * Set the color to draw the font in to white.
 		 */
-		g.setColor(Color.WHITE);
+		g.setColor(Color.BLUE);
 		
 		/*
 		 * Draw the game name onto the window.
@@ -94,10 +94,10 @@ public class SidePanel extends JPanel {
 		g.drawString("Fruit Score: " + game.getNextFruitScore(), LARGE_OFFSET, drawY += MESSAGE_STRIDE);
 		//Draw the content for the controls category.
 		drawY = CONTROLS_OFFSET;
-		g.drawString("Move Up: W / Up Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-		g.drawString("Move Down: S / Down Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-		g.drawString("Move Left: A / Left Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-		g.drawString("Move Right: D / Right Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+		g.drawString("Move Up: Up Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+		g.drawString("Move Down: Down Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+		g.drawString("Move Left: Left Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+		g.drawString("Move Right: Right Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
 		g.drawString("Pause Game: P", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
 	}
 
