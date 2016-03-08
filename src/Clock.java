@@ -75,7 +75,8 @@ public class Clock {
 		
 		//Update the number of elapsed and excess ticks if we're not paused.
 		if(!isPaused) {
-			this.elapsedCycles += (int)Math.floor(delta / millisPerCycle);
+			this.elapsedCycles += (int)Math.floor(delta 
+                                / millisPerCycle);
 			this.excessCycles = delta % millisPerCycle;
 		}
 		
@@ -85,7 +86,8 @@ public class Clock {
 	
 	/**
 	 * Pauses or unpauses the clock. While paused, a clock will not update
-	 * elapsed cycles or cycle excess, though the {@code update} method should
+	 * elapsed cycles or cycle excess, though the {@code update} 
+         * method should
 	 * still be called every frame to prevent issues.
 	 * @param paused Whether or not to pause this clock.
 	 */

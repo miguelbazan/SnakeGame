@@ -75,7 +75,8 @@ public class BoardPanel extends JPanel {
 		this.game = game;
 		this.tiles = new TileType[ROW_COUNT * COL_COUNT];
 		
-		setPreferredSize(new Dimension(COL_COUNT * TILE_SIZE, ROW_COUNT * TILE_SIZE));
+		setPreferredSize(new Dimension(COL_COUNT * 
+                        TILE_SIZE, ROW_COUNT * TILE_SIZE));
 		setBackground(Color.WHITE);
 	}
 	
@@ -129,7 +130,8 @@ public class BoardPanel extends JPanel {
 			for(int y = 0; y < ROW_COUNT; y++) {
 				TileType type = getTile(x, y);
 				if(type != null) {
-					drawTile(x * TILE_SIZE, y * TILE_SIZE, type, g);
+					drawTile(x * TILE_SIZE,
+                                                y * TILE_SIZE, type, g);
 				}
 			}
 		}
@@ -145,8 +147,10 @@ public class BoardPanel extends JPanel {
 		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 		for(int x = 0; x < COL_COUNT; x++) {
 			for(int y = 0; y < ROW_COUNT; y++) {
-				g.drawLine(x * TILE_SIZE, 0, x * TILE_SIZE, getHeight());
-				g.drawLine(0, y * TILE_SIZE, getWidth(), y * TILE_SIZE);
+				g.drawLine(x * TILE_SIZE, 0, 
+                                        x * TILE_SIZE, getHeight());
+				g.drawLine(0, y * TILE_SIZE,
+                                        getWidth(), y * TILE_SIZE);
 			}
 		}		
 		
@@ -163,7 +167,8 @@ public class BoardPanel extends JPanel {
 			int centerY = getHeight() / 2;
 			
 			/*
-			 * Allocate the messages for and set their values based on the game
+			 * Allocate the messages for and set their
+                        values based on the game
 			 * state.
 			 */
 			String largeMessage = null;
@@ -180,11 +185,16 @@ public class BoardPanel extends JPanel {
 			}
 			
 			/*
-			 * Set the message font and draw the messages in the center of the board.
+			 * Set the message font and draw the messages
+                        in the center of the board.
 			 */
 			g.setFont(FONT);
-			g.drawString(largeMessage, centerX - g.getFontMetrics().stringWidth(largeMessage) / 2, centerY - 50);
-			g.drawString(smallMessage, centerX - g.getFontMetrics().stringWidth(smallMessage) / 2, centerY + 50);
+			g.drawString(largeMessage, centerX -
+                                g.getFontMetrics().stringWidth(largeMessage)
+                                        / 2, centerY - 50);
+			g.drawString(smallMessage, centerX -
+                                g.getFontMetrics().stringWidth(smallMessage)
+                                        / 2, centerY + 50);
 		}
 	}
 	
@@ -196,19 +206,47 @@ public class BoardPanel extends JPanel {
 	 * @param g The graphics object to draw to.
 	 */
 	private void drawTile(int x, int y, TileType type, Graphics g) {
-		/*
-		 * Because each type of tile is drawn differently, it's easiest
-		 * to just run through a switch statement rather than come up with some
-		 * overly complex code to handle everything.
-		 */
+	/*
+	 * Because each type of tile is drawn differently, it's easiest
+	 * to just run through a switch statement rather than come up with some
+	 * overly complex code to handle everything.
+	 */
 		switch(type) {
 		
 		/*
-		 * A fruit is depicted as a small red circle that with a bit of padding
+		 * A fruit is depicted as a small red 
+                    circle that with a bit of padding
 		 * on each side.
 		 */
 		case Fruit:
 			g.setColor(Color.RED);
+			g.fillOval(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+			break;
+                 /*
+		 * A fruit is depicted as a small blue 
+                    circle that with a bit of padding
+		 * on each side.
+		 */       
+                case FruitBlue:
+			g.setColor(Color.BLUE);
+			g.fillOval(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+			break;
+                /*
+		 * A fruit is depicted as a small purple 
+                    circle that with a bit of padding
+		 * on each side.
+		 */
+                case FruitPurple:
+			g.setColor(Color.MAGENTA);
+			g.fillOval(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+			break;
+                /*
+		 * A fruit is depicted as a small black
+                    circle that with a bit of padding
+		 * on each side.
+		 */        
+                case badFruit:
+			g.setColor(Color.BLACK);
 			g.fillOval(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
 			break;
 			
@@ -230,62 +268,78 @@ public class BoardPanel extends JPanel {
 			g.setColor(Color.BLACK);
 			g.fillRect(x, y, TILE_SIZE, TILE_SIZE);
 			
-			//Set the color to black so that we can start drawing the eyes.
+		//Set the color to black so that we can start drawing the eyes.
 			g.setColor(Color.RED);
 			
-			/*
-			 * The eyes will always 'face' the direction that the snake is
-			 * moving.
-			 * 
-			 * Vertical lines indicate that it's facing North or South, and
-			 * Horizontal lines indicate that it's facing East or West.
-			 * 
-			 * Additionally, the eyes will be closer to whichever edge it's
-			 * facing.
-			 * 
-			 * Drawing the eyes is fairly simple, but is a bit difficult to
-			 * explain. The basic process is this:
-			 * 
-			 * First, we add (or subtract) EYE_SMALL_INSET to or from the
-			 * side of the tile representing the direction we're facing. This
-			 * will be constant for both eyes, and is represented by the
-			 * variable 'baseX' or 'baseY' (depending on orientation).
-			 * 
-			 * Next, we add (or subtract) EYE_LARGE_INSET to and from the two
-			 * neighboring directions (Example; East and West if we're facing
-			 * north).
-			 * 
-			 * Finally, we draw a line from the base offset that is EYE_LENGTH
-			 * pixels in length at whatever the offset is from the neighboring
-			 * directions.
-			 * 
-			 */
+		/*
+		 * The eyes will always 'face' the direction that the snake is
+		 * moving.
+		 * 
+		 * Vertical lines indicate that it's facing North or South, and
+		 * Horizontal lines indicate that it's facing East or West.
+		 * 
+		 * Additionally, the eyes will be closer to whichever edge it's
+		 * facing.
+		 * 
+		 * Drawing the eyes is fairly simple, but is a bit difficult to
+		 * explain. The basic process is this:
+		 * 
+		 * First, we add (or subtract) EYE_SMALL_INSET to or from the
+		 * side of the tile representing the direction we're facing. This
+		 * will be constant for both eyes, and is represented by the
+		 * variable 'baseX' or 'baseY' (depending on orientation).
+		 * 
+		 * Next, we add (or subtract) EYE_LARGE_INSET to and from the two
+		 * neighboring directions (Example; East and West if we're facing
+		 * north).
+		 * 
+		 * Finally, we draw a line from the base offset that is EYE_LENGTH
+		 * pixels in length at whatever the offset is from the neighboring
+		 * directions.
+		 * 
+		 */
 			switch(game.getDirection()) {
 			case North: {
 				int baseY = y + EYE_SMALL_INSET;
-				g.drawLine(x + EYE_LARGE_INSET, baseY, x + EYE_LARGE_INSET, baseY + EYE_LENGTH);
-				g.drawLine(x + TILE_SIZE - EYE_LARGE_INSET, baseY, x + TILE_SIZE - EYE_LARGE_INSET, baseY + EYE_LENGTH);
+				g.drawLine(x + EYE_LARGE_INSET,
+                                        baseY, x + EYE_LARGE_INSET, 
+                                        baseY + EYE_LENGTH);
+				g.drawLine(x + TILE_SIZE -
+                                        EYE_LARGE_INSET, baseY,
+                                        x + TILE_SIZE - EYE_LARGE_INSET, 
+                                        baseY + EYE_LENGTH);
 				break;
 			}
 				
 			case South: {
 				int baseY = y + TILE_SIZE - EYE_SMALL_INSET;
-				g.drawLine(x + EYE_LARGE_INSET, baseY, x + EYE_LARGE_INSET, baseY - EYE_LENGTH);
-				g.drawLine(x + TILE_SIZE - EYE_LARGE_INSET, baseY, x + TILE_SIZE - EYE_LARGE_INSET, baseY - EYE_LENGTH);
+				g.drawLine(x + EYE_LARGE_INSET, 
+                                        baseY, x + EYE_LARGE_INSET,
+                                        baseY - EYE_LENGTH);
+				g.drawLine(x + TILE_SIZE -
+                                        EYE_LARGE_INSET, baseY,
+                                        x + TILE_SIZE - EYE_LARGE_INSET, 
+                                        baseY - EYE_LENGTH);
 				break;
 			}
 			
 			case West: {
 				int baseX = x + EYE_SMALL_INSET;
-				g.drawLine(baseX, y + EYE_LARGE_INSET, baseX + EYE_LENGTH, y + EYE_LARGE_INSET);
-				g.drawLine(baseX, y + TILE_SIZE - EYE_LARGE_INSET, baseX + EYE_LENGTH, y + TILE_SIZE - EYE_LARGE_INSET);
+				g.drawLine(baseX, y + EYE_LARGE_INSET,
+                                        baseX + EYE_LENGTH, y + EYE_LARGE_INSET);
+				g.drawLine(baseX, y + TILE_SIZE - 
+                                        EYE_LARGE_INSET, baseX + EYE_LENGTH,
+                                        y + TILE_SIZE - EYE_LARGE_INSET);
 				break;
 			}
 				
 			case East: {
 				int baseX = x + TILE_SIZE - EYE_SMALL_INSET;
-				g.drawLine(baseX, y + EYE_LARGE_INSET, baseX - EYE_LENGTH, y + EYE_LARGE_INSET);
-				g.drawLine(baseX, y + TILE_SIZE - EYE_LARGE_INSET, baseX - EYE_LENGTH, y + TILE_SIZE - EYE_LARGE_INSET);
+				g.drawLine(baseX, y + EYE_LARGE_INSET,
+                                        baseX - EYE_LENGTH, y + EYE_LARGE_INSET);
+				g.drawLine(baseX, y + TILE_SIZE - 
+                                        EYE_LARGE_INSET, baseX - EYE_LENGTH,
+                                        y + TILE_SIZE - EYE_LARGE_INSET);
 				break;
 			}
 			

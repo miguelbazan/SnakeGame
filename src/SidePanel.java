@@ -46,7 +46,8 @@ public class SidePanel extends JPanel {
 	public SidePanel(SnakeGame game) {
 		this.game = game;
 		
-		setPreferredSize(new Dimension(300, BoardPanel.ROW_COUNT * BoardPanel.TILE_SIZE));
+		setPreferredSize(new Dimension(300, BoardPanel.ROW_COUNT *
+                        BoardPanel.TILE_SIZE));
 		setBackground(Color.orange);
 	}
 	
@@ -73,7 +74,9 @@ public class SidePanel extends JPanel {
 		 * Draw the game name onto the window.
 		 */
 		g.setFont(LARGE_FONT);
-		g.drawString("Snake Game", getWidth() / 2 - g.getFontMetrics().stringWidth("Snake Game") / 2, 50);
+		g.drawString("Snake Game", getWidth() / 
+                        2 - g.getFontMetrics().stringWidth("Snake Game")
+                                / 2, 50);
 		
 		/*
 		 * Draw the categories onto the window.
@@ -89,16 +92,24 @@ public class SidePanel extends JPanel {
 		
 		//Draw the content for the statistics category.
 		int drawY = STATISTICS_OFFSET;
-		g.drawString("Total Score: " + game.getScore(), LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-		g.drawString("Fruit Eaten: " + game.getFruitsEaten(), LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-		g.drawString("Fruit Score: " + game.getNextFruitScore(), LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+		g.drawString("Total Score: " + game.getScore(), 
+                        LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+		g.drawString("Fruit Eaten: " + game.getFruitsEaten(), 
+                        LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+		g.drawString("Fruit Score: " + game.getNextFruitScore(),
+                        LARGE_OFFSET, drawY += MESSAGE_STRIDE);
 		//Draw the content for the controls category.
 		drawY = CONTROLS_OFFSET;
-		g.drawString("Move Up: Up Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-		g.drawString("Move Down: Down Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-		g.drawString("Move Left: Left Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-		g.drawString("Move Right: Right Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-		g.drawString("Pause Game: P", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+		g.drawString("Move Up: Up Arrowkey", LARGE_OFFSET, 
+                        drawY += MESSAGE_STRIDE);
+		g.drawString("Move Down: Down Arrowkey", LARGE_OFFSET, 
+                        drawY += MESSAGE_STRIDE);
+		g.drawString("Move Left: Left Arrowkey", LARGE_OFFSET,
+                        drawY += MESSAGE_STRIDE);
+		g.drawString("Move Right: Right Arrowkey", LARGE_OFFSET, 
+                        drawY += MESSAGE_STRIDE);
+		g.drawString("Pause Game: P", LARGE_OFFSET, 
+                        drawY += MESSAGE_STRIDE);
 	}
 
 }
