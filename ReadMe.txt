@@ -4,19 +4,19 @@ Play - Enter
 
 Move with arrows
 
-Pause - P
+Pause - P 
 
-Save Game - G
+Save Game - G (asks for username)
 
-Load Game - C
+Load Game - C (asks for username to load)
 
 Red adds 1 tiles to the tail and 50 points
 
-Blue adds 3 tiles to the tail and 100 points
+Blue adds 2 tiles to the tail and 100 points
 
-Green adds 4 tiles to the tail and 200 points
+Green adds 3 tiles to the tail and 200 points
 
-Eating the Choco Cream will end the game.
+Eating the Choco Cream will end the game 
 
 
 Miguel Bazán
