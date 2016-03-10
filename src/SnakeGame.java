@@ -12,7 +12,8 @@ import javax.swing.JFrame;
  * The {@code SnakeGame} class is responsible for handling much of the game's
  * logic.
  *
- * @author Brendan Jones
+ * @author Miguel Bazan
+ * @authos Ricado Licea
  *
  */
 public class SnakeGame extends JFrame {
