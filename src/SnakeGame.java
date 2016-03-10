@@ -438,14 +438,12 @@ public class SnakeGame extends JFrame {
             if (getCurrentTile() == TileType.FruitBlue){
                 board.setTile(snake.peekFirst(), TileType.SnakeBody);
                 snake.push(head);
-                snake.push(head);
                 board.setTile(head,TileType.SnakeHead);
                 currentTileType = null;
             }
             
             if (getCurrentTile() == TileType.FruitGreen){
                 board.setTile(snake.peekFirst(), TileType.SnakeBody);
-                snake.push(head);
                 snake.push(head);
                 snake.push(head);
                 board.setTile(head,TileType.SnakeHead);
