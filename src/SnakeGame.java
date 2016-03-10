@@ -428,9 +428,27 @@ public class SnakeGame extends JFrame {
             board.setTile(snake.peekFirst(), TileType.SnakeBody);
             snake.push(head);
             board.setTile(head, TileType.SnakeHead);
+            
+            if (getCurrentTile() == TileType.FruitBlue){
+                board.setTile(snake.peekFirst(), TileType.SnakeBody);
+                snake.push(head);
+                snake.push(head);
+                board.setTile(head,TileType.SnakeHead);
+                currentTileType = null;
+            }
+            
+            if (getCurrentTile() == TileType.FruitGreen){
+                board.setTile(snake.peekFirst(), TileType.SnakeBody);
+                snake.push(head);
+                snake.push(head);
+                snake.push(head);
+                board.setTile(head,TileType.SnakeHead);
+                currentTileType = null;
+            }
             if (directions.size() > 1) {
                 directions.poll();
             }
+            
         }
 
         return old;
@@ -688,6 +706,14 @@ public class SnakeGame extends JFrame {
     public int getNextFruitScore() {
         return nextFruitScore;
     }
+    
+    /**
+     * Retorna el tipo de tyle que la vibora acaba de comer
+    */
+    private TileType getCurrentTile(){
+        return currentTileType;
+    }
+    
 
     /**
      * Gets the current direction of the snake.
