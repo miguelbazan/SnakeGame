@@ -9,7 +9,8 @@ import javax.swing.JPanel;
 /**
  * The {@code SidePanel} class is responsible for displaying statistics and
  * controls to the player.
- * @author Brendan Jones
+ * @author Miguel Bazan
+ * @authos Ricado Licea
  *
  */
 public class SidePanel extends JPanel {
