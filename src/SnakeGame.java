@@ -323,23 +323,28 @@ public class SnakeGame extends JFrame {
             score += 50;
             spawnFruit();
             currentTileType = TileType.Fruit;
+            
         } else if (collision == TileType.SnakeBody) {
             isGameOver = true;
             logicTimer.setPaused(true); 
+            
         } else if (collision == TileType.FruitBlue){
             fruitsEaten++;
             score += 100;
             spawnFruitBlue();
             currentTileType = TileType.FruitBlue;
+            
         } else if (collision == TileType.FruitGreen){
             fruitsEaten++;
             score += 200;
             spawnFruitGreen();
             currentTileType = TileType.FruitGreen;
+            
         } else if (collision == TileType.badFruit){
             isGameOver = true;
             logicTimer.setPaused(true);
             currentTileType = TileType.badFruit;
+            
         }else if (nextFruitScore > 10) {
             nextFruitScore--;
         }
@@ -576,9 +581,6 @@ public class SnakeGame extends JFrame {
         }
     }
     private void spawnFruitBlue() {
-        //Reset the score for this fruit to 200.
-        this.nextFruitScore = 100;
-
         /*
 	 * Get a random index based on the number of free 
         spaces left on the board.
@@ -611,8 +613,8 @@ public class SnakeGame extends JFrame {
     }
     
     private void spawnFruitGreen() {
-        //Reset the score for this fruit to 300.
-        this.nextFruitScore = 100;
+        
+       
 
         /*
 	 * Get a random index based on the number of 
