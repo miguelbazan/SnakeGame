@@ -13,11 +13,11 @@ public enum TileType {
 	
 	SnakeBody,
         
-        FruitPurple,         // Fruta que agrega 2 a la vibora
+        FruitGreen,         
         
-        FruitBlue,          //Fruta que agrega 3 a la vibora
+        FruitBlue,          
         
-        badFruit        //Frutas malas
+        badFruit        
 	
 }
 

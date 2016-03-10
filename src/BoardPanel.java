@@ -3,7 +3,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 
@@ -66,6 +68,13 @@ public class BoardPanel extends JPanel {
 	 * The array of tiles that make up this board.
 	 */
 	private TileType[] tiles;
+        
+        private Image imaImagenAzul;
+        private Image imaImagenRed;
+        private Image imaImagenGreen;
+        private Image imaImagenChocoMalo;
+        
+ 
 		
 	/**
 	 * Creates a new BoardPanel instance.
@@ -219,8 +228,11 @@ public class BoardPanel extends JPanel {
 		 * on each side.
 		 */
 		case Fruit:
-			g.setColor(Color.RED);
-			g.fillOval(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+                    //obtener imagen de la fruta red
+                    imaImagenRed = Toolkit.getDefaultToolkit()
+                .getImage(this.getClass().getResource("candyRed.png"));
+                        g.drawImage(imaImagenRed,
+                               x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE -4, this);
 			break;
                  /*
 		 * A fruit is depicted as a small blue 
@@ -228,17 +240,23 @@ public class BoardPanel extends JPanel {
 		 * on each side.
 		 */       
                 case FruitBlue:
-			g.setColor(Color.BLUE);
-			g.fillOval(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+                    //obtener imagen de la fruta azul
+                    imaImagenAzul = Toolkit.getDefaultToolkit()
+                .getImage(this.getClass().getResource("candyBlue.png"));
+			g.drawImage(imaImagenAzul,
+                               x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE -4, this);
 			break;
                 /*
 		 * A fruit is depicted as a small purple 
                     circle that with a bit of padding
 		 * on each side.
 		 */
-                case FruitPurple:
-			g.setColor(Color.MAGENTA);
-			g.fillOval(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+                case FruitGreen:
+			//obtener imagen de la fruta azul
+                    imaImagenGreen = Toolkit.getDefaultToolkit()
+                .getImage(this.getClass().getResource("candyGreen.png"));
+			g.drawImage(imaImagenGreen,
+                               x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE -4, this);
 			break;
                 /*
 		 * A fruit is depicted as a small black
@@ -246,8 +264,11 @@ public class BoardPanel extends JPanel {
 		 * on each side.
 		 */        
                 case badFruit:
-			g.setColor(Color.BLACK);
-			g.fillOval(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+			//obtener imagen de la fruta azul
+                    imaImagenChocoMalo = Toolkit.getDefaultToolkit()
+                .getImage(this.getClass().getResource("creamChoco.png"));
+			g.drawImage(imaImagenChocoMalo,
+                               x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE -4, this);
 			break;
 			
 		/*

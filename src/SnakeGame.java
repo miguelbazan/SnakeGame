@@ -99,6 +99,8 @@ public class SnakeGame extends JFrame {
      * The number of points that the next fruit will award us.
      */
     private int nextFruitScore;
+    
+    private TileType currentTileType = TileType.Fruit;
 
     /**
      * Creates a new SnakeGame instance. Creates a new window, and sets up the
@@ -318,24 +320,28 @@ public class SnakeGame extends JFrame {
          */
         if (collision == TileType.Fruit) {
             fruitsEaten++;
-            score += nextFruitScore;
+            score += 50;
             spawnFruit();
+            currentTileType = TileType.Fruit;
         } else if (collision == TileType.SnakeBody) {
             isGameOver = true;
-            logicTimer.setPaused(true);
-        } else if (nextFruitScore > 10) {
-            nextFruitScore--;
+            logicTimer.setPaused(true); 
         } else if (collision == TileType.FruitBlue){
             fruitsEaten++;
-            score += 200;
-            spawnFruitBlue();
-        } else if (collision == TileType.FruitPurple){
-            fruitsEaten++;
             score += 100;
-            spawnFruitPurple();
+            spawnFruitBlue();
+            currentTileType = TileType.FruitBlue;
+        } else if (collision == TileType.FruitGreen){
+            fruitsEaten++;
+            score += 200;
+            spawnFruitGreen();
+            currentTileType = TileType.FruitGreen;
         } else if (collision == TileType.badFruit){
             isGameOver = true;
             logicTimer.setPaused(true);
+            currentTileType = TileType.badFruit;
+        }else if (nextFruitScore > 10) {
+            nextFruitScore--;
         }
     }
 
@@ -397,11 +403,15 @@ public class SnakeGame extends JFrame {
 	 * to prevent a false game over.
          */
         TileType old = board.getTile(head.x, head.y);
-        if (old != TileType.Fruit && snake.size() > MIN_SNAKE_LENGTH) {
+        if (old != TileType.Fruit && old != TileType.FruitGreen
+                && old != TileType.FruitBlue 
+                && snake.size() > MIN_SNAKE_LENGTH) {
             Point tail = snake.removeLast();
             board.setTile(tail, null);
             old = board.getTile(head.x, head.y);
         }
+        
+        
 
         /*
 	 * Update the snake's position on the board if we didn't collide with
@@ -479,7 +489,7 @@ public class SnakeGame extends JFrame {
          */
         spawnFruit();
         spawnFruitBlue();
-        spawnFruitPurple();
+        spawnFruitGreen();
         spawnFruitBad();
     }
 
@@ -549,7 +559,7 @@ public class SnakeGame extends JFrame {
     }
     private void spawnFruitBlue() {
         //Reset the score for this fruit to 200.
-        this.nextFruitScore = 200;
+        this.nextFruitScore = 100;
 
         /*
 	 * Get a random index based on the number of free 
@@ -582,9 +592,9 @@ public class SnakeGame extends JFrame {
         }
     }
     
-    private void spawnFruitPurple() {
+    private void spawnFruitGreen() {
         //Reset the score for this fruit to 300.
-        this.nextFruitScore = 300;
+        this.nextFruitScore = 100;
 
         /*
 	 * Get a random index based on the number of 
@@ -607,9 +617,9 @@ public class SnakeGame extends JFrame {
         for (int x = 0; x < BoardPanel.COL_COUNT; x++) {
             for (int y = 0; y < BoardPanel.ROW_COUNT; y++) {
                 TileType type = board.getTile(x, y);
-                if (type == null || type == TileType.FruitPurple) {
+                if (type == null || type == TileType.FruitGreen) {
                     if (++freeFound == index) {
-                        board.setTile(x, y, TileType.FruitPurple);
+                        board.setTile(x, y, TileType.FruitGreen);
                         break;
                     }
                 }
