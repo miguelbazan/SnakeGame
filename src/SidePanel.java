@@ -9,8 +9,7 @@ import javax.swing.JPanel;
 /**
  * The {@code SidePanel} class is responsible for displaying statistics and
  * controls to the player.
- * @author Miguel Bazan
- * @authos Ricado Licea
+ * @author Brendan Jones
  *
  */
 public class SidePanel extends JPanel {
@@ -54,9 +53,9 @@ public class SidePanel extends JPanel {
 	
 	private static final int STATISTICS_OFFSET = 150;
 	
-	private static final int CONTROLS_OFFSET = 320;
+	private static final int CONTROLS_OFFSET = 250;
 	
-	private static final int MESSAGE_STRIDE = 30;
+	private static final int MESSAGE_STRIDE = 20;
 	
 	private static final int SMALL_OFFSET = 30;
 	
@@ -111,6 +110,13 @@ public class SidePanel extends JPanel {
                         drawY += MESSAGE_STRIDE);
 		g.drawString("Pause Game: P", LARGE_OFFSET, 
                         drawY += MESSAGE_STRIDE);
+                g.drawString("Guardar Juego: G", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+                g.drawString("Cargar Juego: C", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+                g.drawString("Red adds 1 tile +50 pts.", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+                g.drawString("Blue adds 2 tile +100 pts.", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+                g.drawString("Green adds 3 tile +200 pts.", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+                g.drawString("Brown = Game Over.", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+                
 	}
 
 }

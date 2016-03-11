@@ -3,8 +3,15 @@ import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 
@@ -12,8 +19,7 @@ import javax.swing.JFrame;
  * The {@code SnakeGame} class is responsible for handling much of the game's
  * logic.
  *
- * @author Miguel Bazan
- * @authos Ricado Licea
+ * @author Brendan Jones
  *
  */
 public class SnakeGame extends JFrame {
@@ -101,7 +107,7 @@ public class SnakeGame extends JFrame {
      */
     private int nextFruitScore;
     
-    private TileType currentTileType = TileType.Fruit;
+    private TileType currentTileType = null;
 
     /**
      * Creates a new SnakeGame instance. Creates a new window, and sets up the
@@ -228,6 +234,33 @@ public class SnakeGame extends JFrame {
                         break;
                 }
             }
+            public void keyReleased(KeyEvent e){
+                            switch(e.getKeyCode()) {
+                                
+                                    case KeyEvent.VK_G:{
+                                        if(!isPaused){
+                                            try {
+                                            grabaArchivo();
+                                            } catch (IOException ex) {
+                                                Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                            }
+break;
+                                case KeyEvent. VK_C:{
+                                    if(!isPaused){
+                                        try {
+                                            cargaJuego();
+                                        } catch (IOException ex) {
+                                            Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
+                                        } catch (ClassNotFoundException ex) {
+                                            Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    }
+                                }
+                                
+                        }
+                        }
 
         });
 
@@ -324,28 +357,23 @@ public class SnakeGame extends JFrame {
             score += 50;
             spawnFruit();
             currentTileType = TileType.Fruit;
-            
         } else if (collision == TileType.SnakeBody) {
             isGameOver = true;
             logicTimer.setPaused(true); 
-            
         } else if (collision == TileType.FruitBlue){
             fruitsEaten++;
             score += 100;
             spawnFruitBlue();
             currentTileType = TileType.FruitBlue;
-            
         } else if (collision == TileType.FruitGreen){
             fruitsEaten++;
             score += 200;
             spawnFruitGreen();
             currentTileType = TileType.FruitGreen;
-            
         } else if (collision == TileType.badFruit){
             isGameOver = true;
             logicTimer.setPaused(true);
             currentTileType = TileType.badFruit;
-            
         }else if (nextFruitScore > 10) {
             nextFruitScore--;
         }
@@ -434,25 +462,9 @@ public class SnakeGame extends JFrame {
             board.setTile(snake.peekFirst(), TileType.SnakeBody);
             snake.push(head);
             board.setTile(head, TileType.SnakeHead);
-            
-            if (getCurrentTile() == TileType.FruitBlue){
-                board.setTile(snake.peekFirst(), TileType.SnakeBody);
-                snake.push(head);
-                board.setTile(head,TileType.SnakeHead);
-                currentTileType = null;
-            }
-            
-            if (getCurrentTile() == TileType.FruitGreen){
-                board.setTile(snake.peekFirst(), TileType.SnakeBody);
-                snake.push(head);
-                snake.push(head);
-                board.setTile(head,TileType.SnakeHead);
-                currentTileType = null;
-            }
             if (directions.size() > 1) {
                 directions.poll();
             }
-            
         }
 
         return old;
@@ -580,6 +592,9 @@ public class SnakeGame extends JFrame {
         }
     }
     private void spawnFruitBlue() {
+        //Reset the score for this fruit to 200.
+        this.nextFruitScore = 100;
+
         /*
 	 * Get a random index based on the number of free 
         spaces left on the board.
@@ -612,8 +627,8 @@ public class SnakeGame extends JFrame {
     }
     
     private void spawnFruitGreen() {
-        
-       
+        //Reset the score for this fruit to 300.
+        this.nextFruitScore = 100;
 
         /*
 	 * Get a random index based on the number of 
@@ -707,14 +722,6 @@ public class SnakeGame extends JFrame {
     public int getNextFruitScore() {
         return nextFruitScore;
     }
-    
-    /**
-     * Retorna el tipo de tyle que la vibora acaba de comer
-    */
-    private TileType getCurrentTile(){
-        return currentTileType;
-    }
-    
 
     /**
      * Gets the current direction of the snake.
@@ -734,5 +741,71 @@ public class SnakeGame extends JFrame {
         SnakeGame snake = new SnakeGame();
         snake.startGame();
     }
+    
+    public void grabaArchivo() throws IOException {
+        try (ObjectOutputStream oArchivo = new ObjectOutputStream (new FileOutputStream("Guarda.bin"))) {
+            oArchivo.writeInt(this.score); 
+            oArchivo.writeObject(this.directions);
+            oArchivo.writeInt(this.fruitsEaten);
+            oArchivo.writeBoolean(this.isGameOver);
+            oArchivo.writeBoolean(this.isNewGame);
+            oArchivo.writeBoolean(this.isPaused);
+            oArchivo.writeInt(this.nextFruitScore);
+            oArchivo.writeObject(this.board.getTileType());
+            oArchivo.writeObject(this.snake);
+            oArchivo.close();
+        }
+        
+            
+        }
+    public void cargaJuego() throws IOException, ClassNotFoundException {
+          
+        try (ObjectInputStream oArchivo = new ObjectInputStream(new FileInputStream("Guarda.bin"))) {
+            this.setScore((int) oArchivo.readInt());
+            this.setDirection((LinkedList)oArchivo.readObject());
+            this.setFruitsEaten((int) oArchivo.readInt());
+            this.setGameOver((boolean) oArchivo.readBoolean());
+            this.setNewGame((boolean) oArchivo.readBoolean());
+            this.setPaused((boolean) oArchivo.readBoolean());
+            this.setNextFruitScore((int) oArchivo.readInt());
+            this.board.setTile((TileType []) oArchivo.readObject());
+            this.setSnake((LinkedList) oArchivo.readObject());
+            oArchivo.close();
+        }
+            
+        }
+    private void setScore(int iScore) {
+        score = iScore;
+    }
+
+    private void setDirection(LinkedList <Direction> lklDirections) {
+        directions = lklDirections;
+    }
+
+    private void setFruitsEaten(int iFruitsEaten) {
+        fruitsEaten = iFruitsEaten;
+    }
+
+    private void setGameOver(boolean bGameOver) {
+        isGameOver = bGameOver;
+    }
+
+    private void setNewGame(boolean bNewGame) {
+        isNewGame = bNewGame;
+    }
+
+    private void setPaused(boolean bIsPaused) {
+        isPaused = bIsPaused;
+    }
+
+    private void setNextFruitScore(int iNewFruitScore) {
+        nextFruitScore = iNewFruitScore;
+    }
+
+    private void setSnake(LinkedList <Point> lklSnake) {
+        snake = lklSnake;
+    }
+
+     
 
 }

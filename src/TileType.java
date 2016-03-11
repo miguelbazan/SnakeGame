@@ -2,23 +2,36 @@
 /**
  * The {@code TileType} class represents the different
  * types of tiles that can be displayed on the screen.
- * @author Miguel Bazan
- * @authos Ricado Licea
+ * @author Brendan Jones
  *
  */
 public enum TileType {
 
-	Fruit,
+	Fruit(0),
 	
-	SnakeHead,
+	SnakeHead(1),
 	
-	SnakeBody,
+	SnakeBody(2),
         
-        FruitGreen,         
+        FruitGreen(3),         
         
-        FruitBlue,          
+        FruitBlue(4),          
         
-        badFruit        
+        badFruit(5);
+
+    private int iTipo;
+    
+    private TileType(int iTipo){
+        this.iTipo = iTipo;
+    }
+   
+    public int getTipo(){
+        return iTipo;
+    }
+
+    void setTile(TileType[] tileType) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 	
 }
 
