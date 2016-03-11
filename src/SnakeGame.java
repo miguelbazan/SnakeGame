@@ -354,26 +354,31 @@ break;
          */
         if (collision == TileType.Fruit) {
             fruitsEaten++;
-            score += 50;
+            score += 50 + nextFruitScore;
             spawnFruit();
             currentTileType = TileType.Fruit;
+            
         } else if (collision == TileType.SnakeBody) {
             isGameOver = true;
             logicTimer.setPaused(true); 
+            
         } else if (collision == TileType.FruitBlue){
             fruitsEaten++;
-            score += 100;
+            score += 100 + nextFruitScore;
             spawnFruitBlue();
             currentTileType = TileType.FruitBlue;
+            
         } else if (collision == TileType.FruitGreen){
             fruitsEaten++;
-            score += 200;
+            score += 200 + nextFruitScore;
             spawnFruitGreen();
             currentTileType = TileType.FruitGreen;
+            
         } else if (collision == TileType.badFruit){
             isGameOver = true;
             logicTimer.setPaused(true);
             currentTileType = TileType.badFruit;
+            
         }else if (nextFruitScore > 10) {
             nextFruitScore--;
         }
@@ -465,6 +470,22 @@ break;
             if (directions.size() > 1) {
                 directions.poll();
             }
+            if (getCurrentTile() == TileType.FruitBlue){
+                 board.setTile(snake.peekFirst(), TileType.SnakeBody);
+                snake.push(head);
+             //    snake.push(head);
+                 board.setTile(head,TileType.SnakeHead);
+                 currentTileType = null;
+             }
+             
+             if (getCurrentTile() == TileType.FruitGreen){
+                 board.setTile(snake.peekFirst(), TileType.SnakeBody);
+                snake.push(head);
+                 snake.push(head);
+                // snake.push(head);
+                 board.setTile(head,TileType.SnakeHead);
+                 currentTileType = null;
+             }
         }
 
         return old;
@@ -524,7 +545,12 @@ break;
         spawnFruit();
         spawnFruitBlue();
         spawnFruitGreen();
-        spawnFruitBad();
+        // Random de frutas malas 
+        Random rand = new Random();
+        int randomNum = rand.nextInt((6 - 1) + 1) + 1;
+        for (int iJ = 0; iJ < randomNum; iJ++){
+            spawnFruitBad();
+        }
     }
 
     /**
@@ -558,8 +584,8 @@ break;
      * Spawns a new fruit onto the board.
      */
     private void spawnFruit() {
-        //Reset the score for this fruit to 100.
-        this.nextFruitScore = 100;
+        //set the extra score to 50
+       this.nextFruitScore = 50;
 
         /*
 	 * Get a random index based on the number of free spaces left
@@ -592,8 +618,8 @@ break;
         }
     }
     private void spawnFruitBlue() {
-        //Reset the score for this fruit to 200.
-        this.nextFruitScore = 100;
+        //set the extra score to 100
+      this.nextFruitScore = 100;
 
         /*
 	 * Get a random index based on the number of free 
@@ -627,8 +653,9 @@ break;
     }
     
     private void spawnFruitGreen() {
-        //Reset the score for this fruit to 300.
-        this.nextFruitScore = 100;
+      // Set the score of the fruit to 200
+      this.nextFruitScore = 200;
+        
 
         /*
 	 * Get a random index based on the number of 
@@ -804,6 +831,9 @@ break;
 
     private void setSnake(LinkedList <Point> lklSnake) {
         snake = lklSnake;
+    }
+    private TileType getCurrentTile(){
+        return currentTileType;
     }
 
      

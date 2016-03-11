@@ -96,7 +96,7 @@ public class SidePanel extends JPanel {
                         LARGE_OFFSET, drawY += MESSAGE_STRIDE);
 		g.drawString("Fruit Eaten: " + game.getFruitsEaten(), 
                         LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-		g.drawString("Fruit Score: " + game.getNextFruitScore(),
+		g.drawString("Extra Score: " + game.getNextFruitScore(),
                         LARGE_OFFSET, drawY += MESSAGE_STRIDE);
 		//Draw the content for the controls category.
 		drawY = CONTROLS_OFFSET;
