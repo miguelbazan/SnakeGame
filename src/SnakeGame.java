@@ -548,7 +548,7 @@ break;
         // Random de frutas malas 
         Random rand = new Random();
         int randomNum = rand.nextInt((6 - 1) + 1) + 1;
-        for (int iJ = 0; iJ < randomNum; iJ++){
+        for (int iR = 0; iR < randomNum; iR++){
             spawnFruitBad();
         }
     }
