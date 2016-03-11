@@ -57,7 +57,7 @@ public class BoardPanel extends JPanel {
 	/**
 	 * The font to draw the text with.
 	 */
-	private static final Font FONT = new Font("Tahoma", Font.BOLD, 25);
+	private static final Font FONT = new Font("Skia", Font.BOLD, 25);
 		
 	/**
 	 * The SnakeGame instance.

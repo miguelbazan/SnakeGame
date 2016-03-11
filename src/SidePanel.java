@@ -22,17 +22,17 @@ public class SidePanel extends JPanel {
 	/**
 	 * The large font to draw with.
 	 */
-	private static final Font LARGE_FONT = new Font("Tahoma", Font.BOLD, 20);
+	private static final Font LARGE_FONT = new Font("Skia", Font.BOLD, 20);
 	
 	/**
 	 * The medium font to draw with.
 	 */
-	private static final Font MEDIUM_FONT = new Font("Tahoma", Font.BOLD, 16);
+	private static final Font MEDIUM_FONT = new Font("Skia", Font.BOLD, 16);
 
 	/**
 	 * The small font to draw with.
 	 */
-	private static final Font SMALL_FONT = new Font("Tahoma", Font.BOLD, 12);
+	private static final Font SMALL_FONT = new Font("Skia", Font.PLAIN, 12);
 	
 	/**
 	 * The SnakeGame instance.
@@ -48,7 +48,7 @@ public class SidePanel extends JPanel {
 		
 		setPreferredSize(new Dimension(300, BoardPanel.ROW_COUNT *
                         BoardPanel.TILE_SIZE));
-		setBackground(Color.orange);
+		setBackground(Color.BLACK);
 	}
 	
 	private static final int STATISTICS_OFFSET = 150;
@@ -68,7 +68,7 @@ public class SidePanel extends JPanel {
 		/*
 		 * Set the color to draw the font in to white.
 		 */
-		g.setColor(Color.BLUE);
+		g.setColor(Color.CYAN);
 		
 		/*
 		 * Draw the game name onto the window.
