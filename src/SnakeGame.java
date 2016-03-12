@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * The {@code SnakeGame} class is responsible for handling much of the game's
@@ -238,7 +239,7 @@ public class SnakeGame extends JFrame {
                             switch(e.getKeyCode()) {
                                 
                                     case KeyEvent.VK_G:{
-                                        if(!isPaused){
+                                        if(!isGameOver){
                                             try {
                                             grabaArchivo();
                                             } catch (IOException ex) {
@@ -248,7 +249,7 @@ public class SnakeGame extends JFrame {
                             }
 break;
                                 case KeyEvent. VK_C:{
-                                    if(!isPaused){
+                                    if(!isGameOver){
                                         try {
                                             cargaJuego();
                                         } catch (IOException ex) {
@@ -758,6 +759,8 @@ break;
     public Direction getDirection() {
         return directions.peek();
     }
+    
+    private String sGuardar;
 
     /**
      * Entry point of the program.
@@ -770,7 +773,13 @@ break;
     }
     
     public void grabaArchivo() throws IOException {
-        try (ObjectOutputStream oArchivo = new ObjectOutputStream (new FileOutputStream("Guarda.bin"))) {
+        
+        isPaused = true;
+        logicTimer.setPaused(true);
+        sGuardar = JOptionPane.showInputDialog("Nombre de usuario:");
+        sGuardar+=".bin";
+        
+        ObjectOutputStream oArchivo = new ObjectOutputStream (new FileOutputStream(sGuardar));
             oArchivo.writeInt(this.score); 
             oArchivo.writeObject(this.directions);
             oArchivo.writeInt(this.fruitsEaten);
@@ -781,13 +790,17 @@ break;
             oArchivo.writeObject(this.board.getTileType());
             oArchivo.writeObject(this.snake);
             oArchivo.close();
-        }
+        
         
             
         }
     public void cargaJuego() throws IOException, ClassNotFoundException {
+        isPaused =  true;
+        logicTimer.setPaused(true);
+        sGuardar = JOptionPane.showInputDialog("Nombre de usuario:");
+        sGuardar+=".bin";
           
-        try (ObjectInputStream oArchivo = new ObjectInputStream(new FileInputStream("Guarda.bin"))) {
+        try (ObjectInputStream oArchivo = new ObjectInputStream(new FileInputStream(sGuardar))) {
             this.setScore((int) oArchivo.readInt());
             this.setDirection((LinkedList)oArchivo.readObject());
             this.setFruitsEaten((int) oArchivo.readInt());
