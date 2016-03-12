@@ -5,6 +5,8 @@
  */
 /**
  * Clase SoundClip
+ * @author Miguel Bazan
+ * @author Ricardo Licea
  *
  */
 import javax.sound.sampled.UnsupportedAudioFileException;

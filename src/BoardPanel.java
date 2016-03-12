@@ -12,7 +12,8 @@ import javax.swing.JPanel;
 /**
  * The {@code BoardPanel} class is responsible for managing and displaying the
  * contents of the game board.
- * @author Brendan Jones
+ * @author Miguel Bazan
+ * @author Ricardo Licea
  *
  */
 public class BoardPanel extends JPanel {

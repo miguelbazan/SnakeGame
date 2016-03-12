@@ -20,7 +20,8 @@ import javax.swing.JOptionPane;
  * The {@code SnakeGame} class is responsible for handling much of the game's
  * logic.
  *
- * @author Brendan Jones
+ * @author Miguel Bazan
+ * @author Ricardo Licea
  *
  */
 public class SnakeGame extends JFrame {
