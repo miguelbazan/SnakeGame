@@ -110,12 +110,18 @@ public class SidePanel extends JPanel {
                         drawY += MESSAGE_STRIDE);
 		g.drawString("Pause Game: P", LARGE_OFFSET, 
                         drawY += MESSAGE_STRIDE);
-                g.drawString("Guardar Juego: G", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-                g.drawString("Cargar Juego: C", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-                g.drawString("Red adds 1 tile +50 pts.", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-                g.drawString("Blue adds 2 tile +100 pts.", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-                g.drawString("Green adds 3 tile +200 pts.", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-                g.drawString("Brown = Game Over.", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+                g.drawString("Guardar Juego: G", LARGE_OFFSET, 
+                        drawY += MESSAGE_STRIDE);
+                g.drawString("Cargar Juego: C", LARGE_OFFSET, 
+                        drawY += MESSAGE_STRIDE);
+                g.drawString("Red adds 1 tile +50 pts.", LARGE_OFFSET, 
+                        drawY += MESSAGE_STRIDE);
+                g.drawString("Blue adds 2 tile +100 pts.", LARGE_OFFSET, 
+                        drawY += MESSAGE_STRIDE);
+                g.drawString("Green adds 3 tile +200 pts.", LARGE_OFFSET,
+                        drawY += MESSAGE_STRIDE);
+                g.drawString("Brown = Game Over.", LARGE_OFFSET,
+                        drawY += MESSAGE_STRIDE);
                 
 	}
 

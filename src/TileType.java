@@ -28,10 +28,8 @@ public enum TileType {
     public int getTipo(){
         return iTipo;
     }
-
+//To change body of generated methods, choose Tools | Templates.
     void setTile(TileType[] tileType) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
-	
 }
-

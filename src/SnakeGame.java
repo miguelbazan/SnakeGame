@@ -107,18 +107,22 @@ public class SnakeGame extends JFrame {
      * The number of points that the next fruit will award us.
      */
     private int nextFruitScore;
-    
+
     private TileType currentTileType = null;
+    
+    private final SoundClip scSound = new SoundClip("pacman.wav");
 
     /**
      * Creates a new SnakeGame instance. Creates a new window, and sets up the
      * controller input.
      */
     private SnakeGame() {
+        
         super("Snake Remake");
         setLayout(new BorderLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
+        scSound.setLooping(true);
 
         /*
 		 * Initialize the game's panels and add them to the window.
@@ -134,9 +138,10 @@ public class SnakeGame extends JFrame {
          */
         addKeyListener(new KeyAdapter() {
 
-            @Override
-            public void keyPressed(KeyEvent e) {
-                switch (e.getKeyCode()) {
+    @Override
+    public void keyPressed(KeyEvent e) {
+ 
+        switch (e.getKeyCode()) {
 
                     /*
 		 * If the game is not paused, and the game is not over...
@@ -149,14 +154,13 @@ public class SnakeGame extends JFrame {
                         if (!isPaused && !isGameOver) {
                             if (directions.size() < MAX_DIRECTIONS) {
                                 Direction last = directions.peekLast();
-                                if (last != Direction.South &&
-                                        last != Direction.North) {
+                                if (last != Direction.South
+                                        && last != Direction.North) {
                                     directions.addLast(Direction.North);
                                 }
                             }
                         }
                         break;
-
                     /*
 		 * If the game is not paused, and the game is not over...
 		 * 
@@ -168,14 +172,13 @@ public class SnakeGame extends JFrame {
                         if (!isPaused && !isGameOver) {
                             if (directions.size() < MAX_DIRECTIONS) {
                                 Direction last = directions.peekLast();
-                                if (last != Direction.North && 
-                                        last != Direction.South) {
+                                if (last != Direction.North
+                                        && last != Direction.South) {
                                     directions.addLast(Direction.South);
                                 }
                             }
                         }
                         break;
-
                     /*
 			 * If the game is not paused, and the game is not over...
 			 * 
@@ -187,8 +190,8 @@ public class SnakeGame extends JFrame {
                         if (!isPaused && !isGameOver) {
                             if (directions.size() < MAX_DIRECTIONS) {
                                 Direction last = directions.peekLast();
-                                if (last != Direction.East &&
-                                        last != Direction.West) {
+                                if (last != Direction.East
+                                        && last != Direction.West) {
                                     directions.addLast(Direction.West);
                                 }
                             }
@@ -206,14 +209,13 @@ public class SnakeGame extends JFrame {
                         if (!isPaused && !isGameOver) {
                             if (directions.size() < MAX_DIRECTIONS) {
                                 Direction last = directions.peekLast();
-                                if (last != Direction.West &&
-                                        last != Direction.East) {
+                                if (last != Direction.West
+                                        && last != Direction.East) {
                                     directions.addLast(Direction.East);
                                 }
                             }
                         }
                         break;
-
                     /*
 		 * If the game is not over, toggle the paused flag and update
 			 * the logicTimer's pause flag accordingly.
@@ -222,9 +224,12 @@ public class SnakeGame extends JFrame {
                         if (!isGameOver) {
                             isPaused = !isPaused;
                             logicTimer.setPaused(isPaused);
+                            scSound.play();
+                            if (isPaused){
+                                scSound.stop();
+                            }
                         }
                         break;
-
                     /*
 			 * Reset the game if one is not currently in progress.
                      */
@@ -235,33 +240,42 @@ public class SnakeGame extends JFrame {
                         break;
                 }
             }
-            public void keyReleased(KeyEvent e){
-                            switch(e.getKeyCode()) {
-                                
-                                    case KeyEvent.VK_G:{
-                                        if(!isGameOver){
-                                            try {
-                                            grabaArchivo();
-                                            } catch (IOException ex) {
-                                                Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
-                                            }
-                                        }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    
+                switch (e.getKeyCode()) {
+
+                    case KeyEvent.VK_G: {
+                        if (!isGameOver) {
+                            try {
+                                scSound.stop();
+                                grabaArchivo();
+                            } catch (IOException ex) {
+                                Logger.getLogger(SnakeGame.
+                                        class.getName()).
+                                        log(Level.SEVERE, null, ex);
                             }
-break;
-                                case KeyEvent. VK_C:{
-                                    if(!isGameOver){
-                                        try {
-                                            cargaJuego();
-                                        } catch (IOException ex) {
-                                            Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
-                                        } catch (ClassNotFoundException ex) {
-                                            Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
-                                        }
-                                    }
-                                }
-                                
                         }
+                    }
+                    break;
+                    case KeyEvent.VK_C: {
+                        if (!isGameOver) {
+                            try {
+                                scSound.stop();
+                                cargaJuego();
+                            } catch (IOException ex) {
+                                Logger.getLogger(SnakeGame.class.
+                                        getName()).log(Level.SEVERE, null, ex);
+                            } catch (ClassNotFoundException ex) {
+                                Logger.getLogger(SnakeGame.class.
+                                        getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
+                    }
+
+                }
+            }
 
         });
 
@@ -358,29 +372,31 @@ break;
             score += 50 + nextFruitScore;
             spawnFruit();
             currentTileType = TileType.Fruit;
-            
+
         } else if (collision == TileType.SnakeBody) {
             isGameOver = true;
-            logicTimer.setPaused(true); 
-            
-        } else if (collision == TileType.FruitBlue){
+            logicTimer.setPaused(true);
+            scSound.stop();
+
+        } else if (collision == TileType.FruitBlue) {
             fruitsEaten++;
             score += 100 + nextFruitScore;
             spawnFruitBlue();
             currentTileType = TileType.FruitBlue;
-            
-        } else if (collision == TileType.FruitGreen){
+
+        } else if (collision == TileType.FruitGreen) {
             fruitsEaten++;
             score += 200 + nextFruitScore;
             spawnFruitGreen();
             currentTileType = TileType.FruitGreen;
-            
-        } else if (collision == TileType.badFruit){
+
+        } else if (collision == TileType.badFruit) {
             isGameOver = true;
             logicTimer.setPaused(true);
             currentTileType = TileType.badFruit;
-            
-        }else if (nextFruitScore > 10) {
+            scSound.stop();
+
+        } else if (nextFruitScore > 10) {
             nextFruitScore--;
         }
     }
@@ -390,6 +406,7 @@ break;
      *
      * @return Tile tile that the head moved into.
      */
+    
     private TileType updateSnake() {
 
         /*
@@ -428,8 +445,8 @@ break;
 	 * return that it's collided with itself, as both cases are handled
 	 * identically.
          */
-        if (head.x < 0 || head.x >= BoardPanel.COL_COUNT ||
-                head.y < 0 || head.y >= BoardPanel.ROW_COUNT) {
+        if (head.x < 0 || head.x >= BoardPanel.COL_COUNT
+                || head.y < 0 || head.y >= BoardPanel.ROW_COUNT) {
             return TileType.SnakeBody; //Pretend we collided with our body.
         }
 
@@ -444,14 +461,12 @@ break;
          */
         TileType old = board.getTile(head.x, head.y);
         if (old != TileType.Fruit && old != TileType.FruitGreen
-                && old != TileType.FruitBlue 
+                && old != TileType.FruitBlue
                 && snake.size() > MIN_SNAKE_LENGTH) {
             Point tail = snake.removeLast();
             board.setTile(tail, null);
             old = board.getTile(head.x, head.y);
         }
-        
-        
 
         /*
 	 * Update the snake's position on the board if we didn't collide with
@@ -471,22 +486,22 @@ break;
             if (directions.size() > 1) {
                 directions.poll();
             }
-            if (getCurrentTile() == TileType.FruitBlue){
-                 board.setTile(snake.peekFirst(), TileType.SnakeBody);
+            if (getCurrentTile() == TileType.FruitBlue) {
+                board.setTile(snake.peekFirst(), TileType.SnakeBody);
                 snake.push(head);
-             //    snake.push(head);
-                 board.setTile(head,TileType.SnakeHead);
-                 currentTileType = null;
-             }
-             
-             if (getCurrentTile() == TileType.FruitGreen){
-                 board.setTile(snake.peekFirst(), TileType.SnakeBody);
+                //    snake.push(head);
+                board.setTile(head, TileType.SnakeHead);
+                currentTileType = null;
+            }
+
+            if (getCurrentTile() == TileType.FruitGreen) {
+                board.setTile(snake.peekFirst(), TileType.SnakeBody);
                 snake.push(head);
-                 snake.push(head);
+                snake.push(head);
                 // snake.push(head);
-                 board.setTile(head,TileType.SnakeHead);
-                 currentTileType = null;
-             }
+                board.setTile(head, TileType.SnakeHead);
+                currentTileType = null;
+            }
         }
 
         return old;
@@ -513,8 +528,8 @@ break;
         /*
 		 * Create the head at the center of the board.
          */
-        Point head = new Point(BoardPanel.COL_COUNT /
-                2, BoardPanel.ROW_COUNT / 2);
+        Point head = new Point(BoardPanel.COL_COUNT
+                / 2, BoardPanel.ROW_COUNT / 2);
 
         /*
 		 * Clear the snake list and add the head.
@@ -539,6 +554,7 @@ break;
 		 * Reset the logic timer.
          */
         logicTimer.reset();
+        scSound.play();
 
         /*
 		 * Spawn a new fruit.
@@ -548,8 +564,8 @@ break;
         spawnFruitGreen();
         // Random de frutas malas 
         Random rand = new Random();
-        int randomNum = rand.nextInt((6 - 1) + 1) + 1;
-        for (int iR = 0; iR < randomNum; iR++){
+        int randomNum = rand.nextInt((8 - 1) + 1) + 1;
+        for (int iR = 0; iR < randomNum; iR++) {
             spawnFruitBad();
         }
     }
@@ -586,14 +602,14 @@ break;
      */
     private void spawnFruit() {
         //set the extra score to 50
-       this.nextFruitScore = 50;
+        this.nextFruitScore = 50;
 
         /*
 	 * Get a random index based on the number of free spaces left
         on the board.
          */
-        int index = random.nextInt(BoardPanel.COL_COUNT *
-                BoardPanel.ROW_COUNT - snake.size());
+        int index = random.nextInt(BoardPanel.COL_COUNT
+                * BoardPanel.ROW_COUNT - snake.size());
 
         /*
 	 * While we could just as easily choose a random index on the board
@@ -618,16 +634,17 @@ break;
             }
         }
     }
+
     private void spawnFruitBlue() {
         //set the extra score to 100
-      this.nextFruitScore = 100;
+        this.nextFruitScore = 100;
 
         /*
 	 * Get a random index based on the number of free 
         spaces left on the board.
          */
-        int index = random.nextInt(BoardPanel.COL_COUNT *
-                BoardPanel.ROW_COUNT - snake.size());
+        int index = random.nextInt(BoardPanel.COL_COUNT
+                * BoardPanel.ROW_COUNT - snake.size());
 
         /*
 	 * While we could just as easily choose a random index on the board
@@ -652,18 +669,18 @@ break;
             }
         }
     }
-    
+
     private void spawnFruitGreen() {
-      // Set the score of the fruit to 200
-      this.nextFruitScore = 200;
-        
+        // Set the score of the fruit to 200
+        this.nextFruitScore = 200;
+
 
         /*
 	 * Get a random index based on the number of 
         free spaces left on the board.
          */
-        int index = random.nextInt(BoardPanel.COL_COUNT *
-                BoardPanel.ROW_COUNT - snake.size());
+        int index = random.nextInt(BoardPanel.COL_COUNT
+                * BoardPanel.ROW_COUNT - snake.size());
 
         /*
 	 * While we could just as easily choose a random index on the board
@@ -688,14 +705,15 @@ break;
             }
         }
     }
+
     private void spawnFruitBad() {
-       
+
         /*
 	 * Get a random index based on the number of
         free spaces left on the board.
          */
-        int index = random.nextInt(BoardPanel.COL_COUNT * 
-                BoardPanel.ROW_COUNT - snake.size());
+        int index = random.nextInt(BoardPanel.COL_COUNT
+                * BoardPanel.ROW_COUNT - snake.size());
 
         /*
 	 * While we could just as easily choose a random index on the board
@@ -720,9 +738,6 @@ break;
             }
         }
     }
-
-
-
 
     /**
      * Gets the current score.
@@ -759,7 +774,7 @@ break;
     public Direction getDirection() {
         return directions.peek();
     }
-    
+
     private String sGuardar;
 
     /**
@@ -771,54 +786,56 @@ break;
         SnakeGame snake = new SnakeGame();
         snake.startGame();
     }
-    
+
     public void grabaArchivo() throws IOException {
-        
+
         isPaused = true;
         logicTimer.setPaused(true);
         sGuardar = JOptionPane.showInputDialog("Nombre de usuario:");
-        sGuardar+=".bin";
-        
-        ObjectOutputStream oArchivo = new ObjectOutputStream (new FileOutputStream(sGuardar));
-            oArchivo.writeInt(this.score); 
-            oArchivo.writeObject(this.directions);
-            oArchivo.writeInt(this.fruitsEaten);
-            oArchivo.writeBoolean(this.isGameOver);
-            oArchivo.writeBoolean(this.isNewGame);
-            oArchivo.writeBoolean(this.isPaused);
-            oArchivo.writeInt(this.nextFruitScore);
-            oArchivo.writeObject(this.board.getTileType());
-            oArchivo.writeObject(this.snake);
-            oArchivo.close();
-        
-        
-            
-        }
+        sGuardar += ".bin";
+
+        ObjectOutputStream oArchivo = new 
+        ObjectOutputStream(new FileOutputStream(sGuardar));
+        oArchivo.writeInt(this.score);
+        oArchivo.writeObject(this.directions);
+        oArchivo.writeInt(this.fruitsEaten);
+        oArchivo.writeBoolean(this.isGameOver);
+        oArchivo.writeBoolean(this.isNewGame);
+        oArchivo.writeBoolean(this.isPaused);
+        oArchivo.writeInt(this.nextFruitScore);
+        oArchivo.writeObject(this.board.getTileType());
+        oArchivo.writeObject(this.snake);
+        oArchivo.close();
+
+    }
+
     public void cargaJuego() throws IOException, ClassNotFoundException {
-        isPaused =  true;
+        isPaused = true;
         logicTimer.setPaused(true);
         sGuardar = JOptionPane.showInputDialog("Nombre de usuario:");
-        sGuardar+=".bin";
-          
-        try (ObjectInputStream oArchivo = new ObjectInputStream(new FileInputStream(sGuardar))) {
+        sGuardar += ".bin";
+
+        try (ObjectInputStream oArchivo = new 
+        ObjectInputStream(new FileInputStream(sGuardar))) {
             this.setScore((int) oArchivo.readInt());
-            this.setDirection((LinkedList)oArchivo.readObject());
+            this.setDirection((LinkedList) oArchivo.readObject());
             this.setFruitsEaten((int) oArchivo.readInt());
             this.setGameOver((boolean) oArchivo.readBoolean());
             this.setNewGame((boolean) oArchivo.readBoolean());
             this.setPaused((boolean) oArchivo.readBoolean());
             this.setNextFruitScore((int) oArchivo.readInt());
-            this.board.setTile((TileType []) oArchivo.readObject());
+            this.board.setTile((TileType[]) oArchivo.readObject());
             this.setSnake((LinkedList) oArchivo.readObject());
             oArchivo.close();
         }
-            
-        }
+
+    }
+
     private void setScore(int iScore) {
         score = iScore;
     }
 
-    private void setDirection(LinkedList <Direction> lklDirections) {
+    private void setDirection(LinkedList<Direction> lklDirections) {
         directions = lklDirections;
     }
 
@@ -842,13 +859,12 @@ break;
         nextFruitScore = iNewFruitScore;
     }
 
-    private void setSnake(LinkedList <Point> lklSnake) {
+    private void setSnake(LinkedList<Point> lklSnake) {
         snake = lklSnake;
     }
-    private TileType getCurrentTile(){
+
+    private TileType getCurrentTile() {
         return currentTileType;
     }
-
-     
 
 }
